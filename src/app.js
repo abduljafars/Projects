@@ -1,13 +1,20 @@
 'use strict';
 
 import { createStore } from 'redux';
+import React from 'react';
+import { render } from 'react-dom';
 
 //3. define reducers
 const reducer = function(state = { books: [] }, action) {
     switch (action.type) {
         case 'A':
             //let books = state.books.concat(action.payload);
+            //spread operator > babel presets
             return { books: [...state.books, ...action.payload] };
+            break;
+        case 'Delete':
+            const currentBookToRemove = [...state.books];
+            //const intexToDelete = currentBookToRemove.
             break;
     }
     return state;
@@ -38,9 +45,16 @@ store.dispatch({
 store.dispatch({
     type: 'A',
     payload: [{
-    id: 3,
-    title: 'Book3',
-    description: 'This is book3',
-    price: 150
-}]
+        id: 3,
+        title: 'Book3',
+        description: 'This is book3',
+        price: 150
+    }]
+})
+
+store.dispatch({
+    type: 'Delete',
+    payload: {
+        id: 3
+    }
 })
