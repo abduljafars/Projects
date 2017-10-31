@@ -4,6 +4,11 @@ import { createStore } from 'redux';
 import React from 'react';
 import { render } from 'react-dom';
 
+//IMPORT COMBINED REDUCERS
+import reducers from './reducers/index';
+//IMPORT ACTIONS
+import reducers from './actions/cartAction';
+
 //3. define reducers
 const reducer = function(state ={books:[]}, action) {
     switch (action.type) {
