@@ -2,7 +2,7 @@
 
 export  function booksReducers(state ={books:[]}, action) {
     switch (action.type) {
-        case 'A':
+        case 'ADD_BOOK':
             let books = state.books.concat(action.payload);            
             //spread operator > babel presets
             return { books: [...state.books, ...action.payload] };

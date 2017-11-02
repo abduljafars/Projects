@@ -6,6 +6,11 @@ import { render } from 'react-dom';
 
 // import combined reducers
 import reducers from './reducers/index';
+
+//import actions
+import {addToCart} from './actions/cartActions';
+
+import {postBooks,deleteBooks,updateBooks} from './actions/booksActions';
 // 1. create store
 
 const store = createStore(reducers);
@@ -14,9 +19,9 @@ store.subscribe(function() {
 });
 
 //2. create and dispatch actions
-store.dispatch({
-    type: 'A',
-    payload: [{
+
+store.dispatch(postBooks(
+    [{
         id: 1,
         title: 'Book1',
         description: 'This is book1',
@@ -32,32 +37,23 @@ store.dispatch({
         description: 'This is book3',
         price: 105
     }]
-})
+    ))
+
 
 //DELETE a book
-store.dispatch({
-    type: 'DELETE_BOOK',
-    payload: {
-        id: 2
-    }
-})
+store.dispatch(deleteBooks({
+    id:2
+}))
 
 //UPDATE a book
-store.dispatch({
-    type:'UPDATE_BOOK',
-    payload:{
-        id:1,
-        description:'This is updated version book'
-    }
-})
 
+store.dispatch(updateBooks(
+        {
+            id:3,
+            description:'Description of this book updated'
+        }
+))
 
 //---> CART ACTIONS
 //add to cart
-
-store.dispatch({
-    type:'ADD_TO_CART',
-    payload:[{
-        id:5
-    }]
-})
+store.dispatch(addToCart([{id:25}]))

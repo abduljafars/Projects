@@ -10078,10 +10078,15 @@ var _index = __webpack_require__(206);
 
 var _index2 = _interopRequireDefault(_index);
 
+var _cartActions = __webpack_require__(209);
+
+var _booksActions = __webpack_require__(210);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // 1. create store
 
+//import actions
 var store = (0, _redux.createStore)(_index2.default);
 
 // import combined reducers
@@ -10091,52 +10096,39 @@ store.subscribe(function () {
 });
 
 //2. create and dispatch actions
-store.dispatch({
-    type: 'A',
-    payload: [{
-        id: 1,
-        title: 'Book1',
-        description: 'This is book1',
-        price: 50
-    }, {
-        id: 2,
-        title: 'Book2',
-        description: 'This is book2',
-        price: 100
-    }, {
-        id: 3,
-        title: 'Book3',
-        description: 'This is book3',
-        price: 105
-    }]
-});
+
+store.dispatch((0, _booksActions.postBooks)([{
+    id: 1,
+    title: 'Book1',
+    description: 'This is book1',
+    price: 50
+}, {
+    id: 2,
+    title: 'Book2',
+    description: 'This is book2',
+    price: 100
+}, {
+    id: 3,
+    title: 'Book3',
+    description: 'This is book3',
+    price: 105
+}]));
 
 //DELETE a book
-store.dispatch({
-    type: 'DELETE_BOOK',
-    payload: {
-        id: 2
-    }
-});
+store.dispatch((0, _booksActions.deleteBooks)({
+    id: 2
+}));
 
 //UPDATE a book
-store.dispatch({
-    type: 'UPDATE_BOOK',
-    payload: {
-        id: 1,
-        description: 'This is updated version book'
-    }
-});
+
+store.dispatch((0, _booksActions.updateBooks)({
+    id: 3,
+    description: 'Description of this book updated'
+}));
 
 //---> CART ACTIONS
 //add to cart
-
-store.dispatch({
-    type: 'ADD_TO_CART',
-    payload: [{
-        id: 5
-    }]
-});
+store.dispatch((0, _cartActions.addToCart)([{ id: 25 }]));
 
 /***/ }),
 /* 89 */
@@ -23232,7 +23224,7 @@ function booksReducers() {
     var action = arguments[1];
 
     switch (action.type) {
-        case 'A':
+        case 'ADD_BOOK':
             var books = state.books.concat(action.payload);
             //spread operator > babel presets
             return { books: [].concat(_toConsumableArray(state.books), _toConsumableArray(action.payload)) };
@@ -23292,6 +23284,65 @@ function cartReducers() {
 			break;
 	}
 	return state;
+}
+
+/***/ }),
+/* 209 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//add to cart
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.addToCart = addToCart;
+function addToCart(book) {
+	return {
+		type: 'ADD_TO_CART',
+		payload: book
+	};
+}
+
+/***/ }),
+/* 210 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//POST A BOOK
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.postBooks = postBooks;
+exports.deleteBooks = deleteBooks;
+exports.updateBooks = updateBooks;
+function postBooks(book) {
+	return {
+		type: 'ADD_BOOK',
+		payload: book
+	};
+}
+
+//DELETE A BOOK
+function deleteBooks(id) {
+	return {
+		type: 'DELETE_BOOK',
+		payload: id
+	};
+}
+
+//UPDATE A BOOK
+
+function updateBooks(book) {
+	return {
+		type: 'UPDATE_BOOK',
+		payload: book
+	};
 }
 
 /***/ })
