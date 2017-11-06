@@ -39,4 +39,4 @@ render(<Provider store={store}><Bookslist/></Provider>,document.getElementById('
 */
 //---> CART ACTIONS
 //add to cart
-store.dispatch(addToCart([{id:25}]))
+//store.dispatch(addToCart([{id:25}]))
