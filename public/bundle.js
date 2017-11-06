@@ -18955,34 +18955,10 @@ var store = (0, _redux.createStore)(_index2.default, middleware);
 
 var middleware = (0, _redux.applyMiddleware)(_reduxLogger2.default);
 (0, _reactDom.render)(_react2.default.createElement(
-    _reactRedux.Provider,
-    { store: store },
-    _react2.default.createElement(_booksList2.default, null)
+  _reactRedux.Provider,
+  { store: store },
+  _react2.default.createElement(_booksList2.default, null)
 ), document.getElementById('app'));
-
-//2. create and dispatch actions
-/*store.dispatch(postBooks(
-   
-    ))
-*/
-
-//DELETE a book
-/*store.dispatch(deleteBooks({
-    id:2
-}))
-*/
-//UPDATE a book
-
-/*store.dispatch(updateBooks(
-        {
-            id:3,
-            description:'Description of this book updated'
-        }
-))
-*/
-//---> CART ACTIONS
-//add to cart
-//store.dispatch(addToCart([{id:25}]))
 
 /***/ }),
 /* 219 */
@@ -32236,17 +32212,17 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function booksReducers() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { books: [{
-            id: 1,
+            _id: 1,
             title: 'Book1',
             description: 'This is book1',
             price: 501
         }, {
-            id: 2,
+            _id: 2,
             title: 'Book2',
             description: 'This is book2',
             price: 102
         }, {
-            id: 3,
+            _id: 3,
             title: 'Book3',
             description: 'This is book3',
             price: 505
@@ -32264,7 +32240,7 @@ function booksReducers() {
         case 'DELETE_BOOK':
             var currentBookToRemove = [].concat(_toConsumableArray(state.books));
             var indexToDelete = currentBookToRemove.findIndex(function (book) {
-                return book.id === action.payload.id;
+                return book._id === action.payload._id;
             });
             return { books: [].concat(_toConsumableArray(currentBookToRemove.slice(0, indexToDelete)), _toConsumableArray(currentBookToRemove.slice(indexToDelete + 1))) };
             break;
@@ -32274,7 +32250,7 @@ function booksReducers() {
             var currentBookToUpdate = [].concat(_toConsumableArray(state.books));
             //Determine at which index in books array is to be updated
             var indexToUpdate = currentBookToUpdate.findIndex(function (book) {
-                return book.id === action.payload.id;
+                return book._id === action.payload._id;
             });
             //create a new book object with the new values and with the same array index of the item we want to replace
             //To archive this we will use ...spread but we could use concat method too
@@ -32404,8 +32380,8 @@ var BooksList = function (_React$Component) {
 			var booksList = this.props.books.map(function (booksArr) {
 				return _react2.default.createElement(
 					_reactBootstrap.Col,
-					{ xs: 12, md: 4, key: booksArr.id },
-					_react2.default.createElement(_bookItem2.default, { id: booksArr.id, title: booksArr.title, description: booksArr.description, price: booksArr.price })
+					{ xs: 12, md: 4, key: booksArr._id },
+					_react2.default.createElement(_bookItem2.default, { _id: booksArr._id, title: booksArr.title, description: booksArr.description, price: booksArr.price })
 				);
 			});
 			return _react2.default.createElement(
@@ -43752,7 +43728,7 @@ var BookItem = function (_React$Component) {
 		key: 'handleCart',
 		value: function handleCart() {
 			var book = [].concat(_toConsumableArray(this.props.cart), [{
-				id: this.props.id,
+				_id: this.props._id,
 				title: this.props.title,
 				description: this.props.description,
 				price: this.props.price
@@ -43993,7 +43969,7 @@ var Cart = function (_React$Component) {
 			var cartItemList = this.props.cart.map(function (cartArr) {
 				return _react2.default.createElement(
 					_reactBootstrap.Panel,
-					{ key: cartArr.id },
+					{ key: cartArr._id },
 					_react2.default.createElement(
 						_reactBootstrap.Row,
 						null,
@@ -44004,6 +43980,64 @@ var Cart = function (_React$Component) {
 								'h6',
 								null,
 								cartArr.title
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'    '
+							)
+						),
+						_react2.default.createElement(
+							_reactBootstrap.Col,
+							{ xs: 12, sm: 2 },
+							_react2.default.createElement(
+								'h6',
+								null,
+								'$',
+								cartArr.price
+							),
+							_react2.default.createElement(
+								'span',
+								null,
+								'    '
+							)
+						),
+						_react2.default.createElement(
+							_reactBootstrap.Col,
+							{ xs: 12, sm: 2 },
+							_react2.default.createElement(
+								'h6',
+								null,
+								'Qty: ',
+								_react2.default.createElement(_reactBootstrap.Label, { bsStyle: 'success' })
+							)
+						),
+						_react2.default.createElement(
+							_reactBootstrap.Col,
+							{ xs: 6, sm: 4 },
+							_react2.default.createElement(
+								_reactBootstrap.ButtonGroup,
+								{ style: { minWidth: '300px' } },
+								_react2.default.createElement(
+									_reactBootstrap.Button,
+									{ bsStyle: 'default', bsSize: 'small' },
+									'-'
+								),
+								_react2.default.createElement(
+									_reactBootstrap.Button,
+									{ bsStyle: 'default', bsSize: 'small' },
+									'+'
+								),
+								_react2.default.createElement(
+									'span',
+									null,
+									'     '
+								),
+								_react2.default.createElement(
+									_reactBootstrap.Button,
+									{ bsStyle: 'danger', bsSize: 'small' },
+									'DELETE'
+								)
 							)
 						)
 					)
