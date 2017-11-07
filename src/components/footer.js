@@ -7,7 +7,7 @@ class Footer extends React.Component{
 		return(
 			<footer className='footer text-center'>
 				<div className="container">
-					<p className="footer-text"> CopyRights@2017-18 ReactRedux App</p>
+					<p className="footer-text"> CopyRights@2017-18 ReactRedux App by Abdul Jafar S</p>
 				</div>
 			</footer>
 			)
