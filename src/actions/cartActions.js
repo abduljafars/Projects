@@ -7,3 +7,11 @@ export function addToCart(book){
    		 payload:book
 		}
 }
+
+//delete from cart
+export function deleteCartItem(cart){
+	return{
+		 type:'DELTE_CART_ITEM',
+   		 payload:cart
+		}
+}
