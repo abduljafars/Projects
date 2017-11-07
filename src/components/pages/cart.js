@@ -2,11 +2,10 @@
 
 import React from 'react';
 import {connect} from 'react-redux';
-import {Panel, Col, Row, Well, Button, ButtonGroup, Label} from 'react-bootstrap';
+import {Panel, Col, Row, Well, Button, ButtonGroup, Label, Modal} from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {deleteCartItem,updateCart} from '../../actions/cartActions';
 class Cart extends React.Component{
-
 	onDelete(_id){
 		 const currentBookToRemove = this.props.cart;
             const indexToDelete = currentBookToRemove.findIndex(function(cart){
@@ -22,6 +21,19 @@ class Cart extends React.Component{
 		if(quantity>1){			
 		this.props.updateCart(_id,-1);
 		}
+	}
+	constructor(){
+		super();
+		this.state={
+			showModal:false
+		}
+	}
+	open(){
+		this.setState({showModal:true})
+	}
+
+	close(){
+		this.setState({showModal:false})
 	}
 	render(){
 		if(this.props.cart[0]){
@@ -54,9 +66,7 @@ class Cart extends React.Component{
 					<span>     </span>
 					<Button onClick={this.onDelete.bind(this,cartArr._id)}bsStyle='danger' bsSize='small'>DELETE</Button>
 				</ButtonGroup>
-
-				</Col>
-				
+				</Col>				
 				</Row>
 				</Panel>
 			)
@@ -64,6 +74,27 @@ class Cart extends React.Component{
 		return(
 		<Panel header="cart" bsStyle='primary'>
 		{cartItemList}
+		<Row>
+			<Col xs={12}>
+				<h6>Total Amount:</h6>
+				<Button onClick={this.open.bind(this)} bsStyle='success' bsSize='small'>Proceed to checkout</Button>
+			</Col>
+		</Row>
+		<Modal show={this.state.showModal} onHide={this.close.bind(this)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Thank you!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          	<h6>Your order have been saved</h6>
+          	<p>You will recieve email confirmation</p>
+          </Modal.Body>
+          <Modal.Footer>
+          <Col xs={6}>
+          	<h6>Total $:</h6>
+          </Col>
+            <Button onClick={this.close.bind(this)}>Close</Button>
+          </Modal.Footer>
+        </Modal>
 		</Panel>
 		)
 	}
