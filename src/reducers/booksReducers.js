@@ -1,26 +1,10 @@
 'use strict';
 
-export  function booksReducers(state ={books:
- [{
-        _id: 1,
-        title: 'Book1',
-        description: 'This is book1',
-        price: 501
-    }, {
-        _id: 2,
-        title: 'Book2',
-        description: 'This is book2',
-        price: 102
-    }, {
-        _id: 3,
-        title: 'Book3',
-        description: 'This is book3',
-        price: 505
-    }]}, action) {
+export  function booksReducers(state ={books:[]}, action) {
     switch (action.type) {
         case 'GET_BOOKS':
-            return {...state,books:[...state.books]}
-        case 'ADD_BOOK':
+            return {...state,books:[...action.payload]}
+        case 'POST_BOOK':
             let books = state.books.concat(action.payload);            
             //spread operator > babel presets
             return { books: [...state.books, ...action.payload] };

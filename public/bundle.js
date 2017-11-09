@@ -11260,8 +11260,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //GET A BOOk
 function getBooks() {
-	return {
-		type: 'GET_BOOKS'
+	return function (dispatch) {
+		_axios2.default.get('/books').then(function (response) {
+			dispatch({ type: 'GET_BOOKS', payload: response.data });
+		}).catch(function (err) {
+			dispatch({ type: 'GET_BOOKS_REJECTED', payload: err });
+		});
 	};
 }
 
@@ -11272,16 +11276,19 @@ function postBooks(book) {
 		_axios2.default.post('/books', book).then(function (response) {
 			dispatch({ type: 'POST_BOOK', payload: response.data });
 		}).catch(function (err) {
-			dispatch({ type: 'POST_BOOK_REJECT', payload: 'There was an error while posting the book' });
+			dispatch({ type: 'POST_BOOK_REJECTED', payload: 'There was an error while posting the book' });
 		});
 	};
 }
 
 //DELETE A BOOK
 function deleteBooks(id) {
-	return {
-		type: 'DELETE_BOOK',
-		payload: id
+	return function (dispatch) {
+		_axios2.default.delete('/books/' + id).then(function (response) {
+			dispatch({ type: 'DELETE_BOOK', payload: id });
+		}).catch(function (err) {
+			dispatch({ type: 'DELETE_BOOK_REJECTED', payload: err });
+		});
 	};
 }
 
@@ -38146,28 +38153,13 @@ exports.booksReducers = booksReducers;
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function booksReducers() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { books: [{
-            _id: 1,
-            title: 'Book1',
-            description: 'This is book1',
-            price: 501
-        }, {
-            _id: 2,
-            title: 'Book2',
-            description: 'This is book2',
-            price: 102
-        }, {
-            _id: 3,
-            title: 'Book3',
-            description: 'This is book3',
-            price: 505
-        }] };
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { books: [] };
     var action = arguments[1];
 
     switch (action.type) {
         case 'GET_BOOKS':
-            return _extends({}, state, { books: [].concat(_toConsumableArray(state.books)) });
-        case 'ADD_BOOK':
+            return _extends({}, state, { books: [].concat(_toConsumableArray(action.payload)) });
+        case 'POST_BOOK':
             var books = state.books.concat(action.payload);
             //spread operator > babel presets
             return { books: [].concat(_toConsumableArray(state.books), _toConsumableArray(action.payload)) };
